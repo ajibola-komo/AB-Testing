@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: AB_TEST
+    schema: BRONZE
+    description: "Raw ingested data from Duckdb"
+
+    tables:
+      - name: ab_test
+        description: "Raw A/B test data ingested from Duckdb."
+
+      - name: countries
+        description: "Raw country data ingested from Duckdb."
