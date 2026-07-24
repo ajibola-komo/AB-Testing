@@ -22,7 +22,6 @@ The dashboards answers key business questions including:
 - Demonstrate analytics engineering best practices, including documentation, data quality validation, and reproducible transformations.
 
 ## Tech Stack
-## Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
