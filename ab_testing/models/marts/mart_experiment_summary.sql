@@ -7,7 +7,7 @@ count(case when is_converted = 1 then user_id end)::FLOAT/nullif(count(user_id),
 count(distinct case when is_converted = 1 then user_id end)::FLOAT/nullif(count(distinct user_id),0) as visitor_conversion_rate,
 avg(duration_seconds) as average_session_duration,
 median(duration_seconds) as median_session_duration
-from {{ref('ab_test_mart')}}
+from {{ref('mart_ab_test')}}
 WHERE
     (test_group = 'control' AND test_page = 'old_page')
     OR
