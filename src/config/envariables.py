@@ -18,7 +18,7 @@ SNOWFLAKE_STATISTICS_CONFIG = {
         "password": os.getenv("SNOWFLAKE_PASSWORD"),
         "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
         "database": os.getenv("SNOWFLAKE_DATABASE"),
-        "schema": "mart",
+        "schema": "marts",
         "role": os.getenv("SNOWFLAKE_ROLE")
 }
 

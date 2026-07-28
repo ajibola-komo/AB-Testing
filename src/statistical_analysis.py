@@ -19,6 +19,8 @@ def run_statistical_analysis():
     cursor.execute(f"USE DATABASE {SNOWFLAKE_STATISTICS_CONFIG.get('database')}")
     cursor.execute(f"USE SCHEMA {SNOWFLAKE_STATISTICS_CONFIG.get('database')}.{SNOWFLAKE_STATISTICS_CONFIG.get('schema')}")
     cursor.execute(f"USE WAREHOUSE {SNOWFLAKE_STATISTICS_CONFIG.get('warehouse')}")
+
+    print("here 1")
     try:
         with open(SNOWFLAKE_STATISTISTICAL_SUMMARY,"r") as f:
             ddl = f.read()
@@ -28,7 +30,7 @@ def run_statistical_analysis():
         print("Cannot run")
         raise
 
-
+        print("here 2")
     df1 = cursor.execute('''
         with get_top_metrics as (
         select
@@ -40,7 +42,7 @@ def run_statistical_analysis():
             from mart_ab_test
         ), second_level_metrics as(
         select total_sessions,
-        control_sessions,control_conversions, treatment_conversions, 
+        control_sessions, control_conversions, treatment_conversions, 
         treatment_sessions, (control_conversions::FLOAT / nullif(control_sessions,0)) as control_conversion_rate,
         (treatment_conversions::FLOAT / nullif(treatment_sessions,0)) as treatment_conversion_rate
         from get_top_metrics
@@ -50,6 +52,8 @@ def run_statistical_analysis():
         (treatment_conversion_rate - control_conversion_rate) as absolute_lift
     from second_level_metrics
 ''').fetch_pandas_all()
+
+    df1.columns = df1.columns.str.lower()
 
     metrics = df1.iloc[0]
 
