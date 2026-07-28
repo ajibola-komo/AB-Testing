@@ -4,4 +4,6 @@ select
     con_treat as test_group,
     page as test_page,
     converted as is_converted
-from {{source('bronze', 'ab_test')}} where id is not null
+from {{source('bronze', 'ab_test')}} where id is not null and id in (
+            select user_id from {{ref('silver_valid_ab_users')}}
+)

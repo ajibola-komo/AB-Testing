@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from src.config.envariables import SNOWFLAKE_CONFIG
 
 from src.config.paths import (DDL_AB_TEST, DDL_COUNTRIES, SNOWFLAKE_AB_TEST, SNOWFLAKE_COUNTRIES, RAW_AB_TEST, RAW_COUNTRIES, DB_DIR,
-                              SNOWFLAKE_TABLE_NAMES
+                              
                               )
 
 load_dotenv()

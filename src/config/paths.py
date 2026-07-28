@@ -12,6 +12,7 @@ DDL_COUNTRIES = DDL_DIR / "sql" / "countries.sql"
 
 SNOWFLAKE_AB_TEST = DDL_DIR / "snowflake" / "ab_test.sql"
 SNOWFLAKE_COUNTRIES = DDL_DIR / "snowflake" / "countries.sql"
+SNOWFLAKE_STATISTISTICAL_SUMMARY = DDL_DIR / "snowflake" / "statistical_analysis.sql"
 
 RAW_AB_TEST = RAW_DIR / "ab_test.csv"
 RAW_COUNTRIES = RAW_DIR / "countries_ab.csv"
