@@ -9,17 +9,15 @@ with get_metrics as (
 
     median(duration_seconds) as median_session_duration,
 
-    count(case when test_group = 'control' and test_page = 'old_page' and is_converted = 1 then user_id end) as total_control_conversions,
+    count(case when test_group = 'control' and is_converted = 1 then user_id end) as total_control_conversions,
 
-    count(case when test_group = 'treatment' and test_page = 'new_page' and is_converted = 1 then user_id end) as total_treatment_conversions,
+    count(case when test_group = 'treatment' and is_converted = 1 then user_id end) as total_treatment_conversions,
 
-    count(case when test_group = 'treatment' and test_page = 'new_page' then user_id end) as total_treatment_sessions,
+    count(case when test_group = 'treatment' then user_id end) as total_treatment_sessions,
 
-    count(case when test_group = 'control' and test_page = 'old_page' then user_id end) as total_control_sessions
+    count(case when test_group = 'control' then user_id end) as total_control_sessions
 
     from {{ref('mart_ab_test')}}
-
-    where (test_group = 'control' and test_page = 'old_page') or (test_group = 'treatment' and test_page = 'new_page')
 )
 
 select 
