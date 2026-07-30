@@ -6,6 +6,7 @@ DDL_DIR = PROJECT_ROOT / "ddl"
 RAW_DIR = PROJECT_ROOT / "raw"
 
 DB_DIR = PROJECT_ROOT / "ab_testing.db"
+DBT_DIR = PROJECT_ROOT / "ab_testing"
 
 DDL_AB_TEST = DDL_DIR / "sql" / "ab_test.sql"
 DDL_COUNTRIES = DDL_DIR / "sql" / "countries.sql"
