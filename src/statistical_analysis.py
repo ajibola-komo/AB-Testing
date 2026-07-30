@@ -78,8 +78,8 @@ def run_statistical_analysis():
     ci_low, ci_high = confint_proportions_2indep(treatment_conversions,treatment_sessions,control_conversions,control_sessions)
 
     df2 = pd.DataFrame({
-        'control_sessions':control_sessions,
-        'treatment_sessions':treatment_sessions,
+        'total_control_sessions':control_sessions,
+        'total_treatment_sessions':treatment_sessions,
         'control_conversion_rate':df1['control_conversion_rate'],
         'treatment_conversion_rate':df1['treatment_conversion_rate'],
         'absolute_lift':df1['absolute_lift'],

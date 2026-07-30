@@ -1,13 +1,18 @@
-CREATE OR REPLACE TABLE mart_statistical_summary(
-    control_sessions bigint,
-    treatment_sessions bigint,
-    control_conversion_rate decimal(5,2),
-    treatment_conversion_rate decimal(5,2),
-    absolute_lift decimal(5,2),
-    relative_lift decimal(5,2),
-    z_statistic decimal(5,2),
-    p_value decimal(5,2),
-    ci_lower decimal(5,2),
-    ci_upper decimal(5,2),
-    is_significant boolean
-)
+CREATE OR REPLACE TABLE mart_statistical_summary (
+    total_control_sessions      BIGINT,
+    total_treatment_sessions    BIGINT,
+
+    control_conversion_rate     DECIMAL(10,6),
+    treatment_conversion_rate   DECIMAL(10,6),
+
+    absolute_lift               DECIMAL(10,6),
+    relative_lift               DECIMAL(10,6),
+
+    z_statistic                 DECIMAL(10,4),
+    p_value                     DECIMAL(10,6),
+
+    ci_lower                    DECIMAL(12,10),
+    ci_upper                    DECIMAL(12,10),
+
+    is_significant              BOOLEAN
+);

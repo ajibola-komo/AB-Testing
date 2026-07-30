@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 from src.config.envariables import SNOWFLAKE_CONFIG
 import subprocess
+from src.statistical_analysis import run_statistical_analysis
 
 from src.config.paths import (DDL_AB_TEST, DDL_COUNTRIES, SNOWFLAKE_AB_TEST, SNOWFLAKE_COUNTRIES, RAW_AB_TEST, RAW_COUNTRIES, DB_DIR,
                               DBT_DIR
@@ -113,6 +114,7 @@ def main():
     load_csv_data(conn)
     load_to_snowflake(conn)
     conn.close()
+    run_statistical_analysis()
     run_dbt()
 
 main()
