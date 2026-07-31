@@ -1,5 +1,24 @@
 # End-to-End AB Testing Experimentation Analytics Platform
 
+## Table of Contents
+
+1. Problem Statement and Business Case
+2. Business Questions
+3. Project Objectives
+4. Project Highlights
+5. Technology Stack
+6. Solution Architecture
+7. Analytics Engineering Workflow
+8. Data Model
+9. Business Intelligence Layer
+10. Dashboard Review
+11. Statistical Methodology
+12. Key Findings
+13. Business Recommendation
+14. Repository Structure
+15. Key Skills Demonstrated
+16. Author
+
 ## 1. Problem Statement and Business Case
 Companies frequently experiment with new product features and user experiences to improve key business outcomes such as customer acquisition, engagement, and conversion. However, making product decisions without a structured experimentation framework can lead to subjective conclusions and costly releases.
 
@@ -8,7 +27,7 @@ This project implements an end-to-end A/B Testing Analytics Engineering platform
 The project demonstrates how raw experimental data can be transformed into trusted business metrics through an analytics engineering workflow. Data is modelled using **dbt**, transformed into analytics-ready marts, and visualized in **Power BI** to provide stakeholders with actionable insights.
 
 ## 2. Business Questions
-The dashboards answers key business questions including:
+These dashboards answer key business questions including:
 - Does the new landing page improve conversion rates?
 - What is the absolute and relative lift between the two variants?
 - How was traffic allocated across the experiment?
@@ -68,11 +87,11 @@ bronze, silver and the mart layer. A comprehensive description of the data model
 | mart_experiment_summary | Mart | One record per test group  | 2 | Executive A/B testing KPIs |
 | mart_high_level_summary | Mart | One summary record | 1 | Overall experiment summary |
 | mart_session_analysis | Mart | One record per duration bucket  | 4 | Session duration analysis |
-| mart_data_quality | Mart | One summary data quality metrics records  | 1 | Data Quality Analysis |
-| mart_statistical_summary | Mart | One statistical results summary record  | 1 | Statistical Summary |
+| mart_data_quality | Mart | One summary record containing data quality metrics | 1 | Data Quality Analysis |
+| mart_statistical_summary | Mart | One statistical summary record | 1 | Statistical Summary |
 
 ---
-## 9. BI Layer
+## 9. Business Intelligence Layer
 
 This project uses Power BI as a visualisation layer however, Power BI is not connected to Snowflake to reduce unneccessary complexity.
 
@@ -111,6 +130,40 @@ For detailed metrics definition, see [metrics_definition.md](documentation/03%20
 
 ## 11. Statistical Methodology
 
+The experiment evaluates whether the redesigned landing page results in a statistically significant difference in conversion rate compared with the existing landing page.
+
+### Statistical Test
+
+A two-sided two-proportion Z-test is used to compare conversion rates between the control and treatment groups.
+
+### Null Hypothesis (H₀)
+
+There is no difference in conversion rates between the control and treatment landing pages.
+
+### Alternative Hypothesis (H₁)
+
+There is a difference in conversion rates between the control and treatment landing pages.
+
+### Statistical Assumptions
+
+- Random assignment of users
+- Independent observations
+- Binary conversion outcome
+- Large sample approximation
+- Significance level (α) = 0.05
+
+### Reported Metrics
+
+- Control Conversion Rate
+- Treatment Conversion Rate
+- Absolute Lift
+- Relative Lift
+- Z Statistic
+- P Value
+- 95% Confidence Interval
+
+Detailed metric definitions are available in the [Metrics Definition documentation](documentation/03%20-%20metrics_definition.md).
+
 ## 12. Key Findings
 
 - The analysis shows a 1.3% invalid test group assignment error which was omitted from the overall analysis.
@@ -120,7 +173,7 @@ For detailed metrics definition, see [metrics_definition.md](documentation/03%20
 
 ## 13. Business Recommendation
 
-- We recommend rejecting the new page design and retaining the old page while exploring other design options that could has a concrete impact
+- We recommend rejecting the new page design and retaining the old page while exploring other design options that could have a meaningful impact
 on conversion.
 
 ## 14. Repository Structure
@@ -190,7 +243,7 @@ AB-Testing/
 ```
 
 
-## Key Skills Demonstrated
+## 15. Key Skills Demonstrated
 
 ### Analytics Engineering
 
@@ -206,7 +259,7 @@ AB-Testing/
 - Product Analytics
 - KPI Design
 
-### BI
+### Business Intelligence
 
 - Power BI
 - Dashboard Design
@@ -214,7 +267,7 @@ AB-Testing/
 
 ---
 
-## Author
+## 16. Author
 **Ajibola Komolafe** — Analytics Engineer | Data Analyst
 - [LinkedIn](https://www.linkedin.com/in/ajibola-komo/) 
 - [GitHub](https://github.com/ajibola-komo/)
