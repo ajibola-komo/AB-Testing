@@ -77,7 +77,7 @@ bronze, silver and the mart layer. A comprehensive description of the data model
 
 This project uses Power BI as a visualisation layer however, Power BI is not connected to Snowflake to reduce unneccessary complexity.
 
-The 6 mart tables are downloaded from snowflake in CSV format and loaded to Power BI. Additionally, only the pre-aggregated mart tables are
+The 8 mart tables are exported from snowflake in CSV format and loaded to Power BI. Additionally, only the pre-aggregated mart tables are
 connected to at the BI Layer
 
 ## Dashboard Review
