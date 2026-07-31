@@ -1,9 +1,9 @@
 select 
 CASE
-    WHEN duration_seconds < 10 THEN 'Less than 10 Sec'
-    WHEN duration_seconds >= 10 AND duration_seconds < 20 THEN '10 - 19.99 Sec'
-    WHEN duration_seconds >= 20 AND duration_seconds < 30 THEN '20 - 29.99 Sec'
-    ELSE '30+ Sec'
+    WHEN duration_seconds < 10 AND duration_seconds <= 60 THEN 'Less than 1 Min'
+    WHEN duration_seconds > 60 AND duration_seconds <= 300 THEN '1 - 5 Min'
+    WHEN duration_seconds > 300 AND duration_seconds <= 600 THEN '5 - 10 Min'
+    ELSE '10+ Min'
 END as duration_bucket,
 count(distinct user_id) as total_visitors,
 count(*) as total_sessions,

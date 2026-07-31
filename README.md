@@ -21,6 +21,14 @@ The dashboards answers key business questions including:
 - Develop an executive Power BI dashboard that communicates experiment outcomes and business recommendations.
 - Demonstrate analytics engineering best practices, including documentation, data quality validation, and reproducible transformations.
 
+## Project Highlights
+
+- Built an end-to-end Analytics Engineering pipeline for A/B testing.
+- Modelled experiment data using dbt dimensional models.
+- Calculated statistical validation metrics including lift, z-statistic, p-value and confidence intervals.
+- Developed executive and experimentation dashboards in Power BI.
+- Produced business recommendations supported by statistical evidence.
+
 ## Tech Stack
 
 | Layer | Technology | Purpose |
@@ -32,9 +40,25 @@ The dashboards answers key business questions including:
 | Version Control | Git & GitHub | Source code management |
 | Visualization | Power BI | Executive dashboard and business reporting |
 
+## Solution Architecture
+
+![Architecture Diagram](images/architecture_diagram.png)
+
+
+## Analytics Engineer Workflow
+
+1. Load the Kaggle A/B testing dataset into DuckDB.
+2. Ingest the raw experiment data into Snowflake.
+3. Transform the raw data into a medallion architecture (Bronze, Silver and Mart) using dbt.
+4. Perform statistical analysis on the analytics-ready mart tables using Python.
+5. Load the statistical analysis results back into the Snowflake mart schema.
+6. Export the aggregated mart tables from Snowflake for reporting.
+7. Build executive and experimentation dashboards in Power BI.
+8. Generate business insights and recommendations based on the statistical results.
+
 ## Data Model
 
-The is section of the document focuses **exclusively on the mart layer** of the data model. The project follows a medallion architecture namely
+This section of the document focuses **exclusively on the mart layer** of the data model. The project follows a medallion architecture namely
 bronze, silver and the mart layer. A comprehensive description of the data model can be found in the [data dictionary documentation](docs/data_dictionary.pdf).
 
 | Table | Type | Grain | Approx. Rows | Purpose |
@@ -45,6 +69,8 @@ bronze, silver and the mart layer. A comprehensive description of the data model
 | mart_experiment_summary | Mart | One record per test group  | 2 | Executive A/B testing KPIs |
 | mart_high_level_summary | Mart | One summary record | 1 | Overall experiment summary |
 | mart_session_analysis | Mart | One record per duration bucket  | 4 | Session duration analysis |
+| mart_data_quality | Mart | One summary data quality metrics records  | 1 | Data Quality Analysis |
+| mart_statistical_summary | Mart | One statistical results summary record  | 1 | Statistical Summary |
 
 ---
 ## BI Layer
@@ -58,29 +84,36 @@ connected to at the BI Layer
 
 ### Executive Dashboard
 
-[Screenshot]
+![Executive Dashboard](images/executive_dashboard.png)
 
-### Dashboard
+### Experimentation Dashboard
 
-[Screenshot]
-
-### Dashboard
-
-[Screenshot]
+![Experimentation Dashboard](images/experimentation_dashboard.png)
 
 ---
 
 ## Key Skills Demonstrated
 
-- Analytics Engineering
-- Product Analytics
-- Data Modeling
-- SQL
-- Python
-- Snowflake
+### Analytics Engineering
+
 - dbt
+- SQL
+- Snowflake
+- DuckDB
+- Dimensional Modelling
+
+### Analytics
+
+- A/B Testing
+- Statistical Validation
+- Product Analytics
+- KPI Design
+
+### BI
+
 - Power BI
-- AB Testing
+- Dashboard Design
+- Executive Reporting
 
 ---
 

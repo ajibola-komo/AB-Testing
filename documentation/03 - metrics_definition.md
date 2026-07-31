@@ -1,6 +1,8 @@
 # End-to-End AB Testing Experimentation Analytics Platform - Metrics Definition Documentation
 
-This document defines the business metrics implemented in the A/B Testing Analytics Engineering Platform. For each metric, it provides the business definition, business purpose, calculation formula, SQL implementation, reporting format, and any relevant assumptions to ensure consistent and accurate reporting across the project.
+This document defines the business, data quality and statistical validation metrics implemented in the A/B Testing Analytics Engineering Platform. For each metric, it provides the business definition, business purpose, calculation formula, SQL implementation, reporting format, and any relevant assumptions to ensure consistent and accurate reporting across the project.
+
+## 1. Business Metrics
 
 | Metric Name | Business Definition | Calculation | Used In |
 | ----------- | ----------- | ----------- | ----------- |
@@ -23,6 +25,16 @@ This document defines the business metrics implemented in the A/B Testing Analyt
 | Invalid Assignment Rate | Percentage of all sessions with invalid assignments and discarded from the overall experiment. | `COUNT(case when(test_group = 'control' and test_page = 'new_page') or (test_group = 'treatment' AND test_page = 'old_page') THEN 1 END)` / `COUNT(*)` | Data Quality Dashboard |
 | Valid Assignment Rate | Percentage of all experiment sessions with valid experiment assignments that are included in the analysis. | 1 - `Invalid Assignment Rate` | Data Quality Dashboard |
 
+## 2. Statistical Validation Metrics
+
+| Metric Name | Business Definition | Interpretation | Used In |
+| ----------- | ----------- | ----------- | ----------- |
+| Z Statistic | Standardized difference between conversion rates | Larger absolute values indicate stronger evidence against the null hypothesis. | Experimentation Dashboard |
+| P Value | Probability of observing the result if there is truly no difference | p < 0.05 is commonly considered statistically significant. | Experimentation Dashboard |
+| CI Lower (Lower Confidence Bound) | The lower bound of the confidence interval for the estimated treatment effect  | Represents the worst plausible impact of the treatment | Experimentation Dashboard |
+| CI Upper (Upper Confidence Bound) | The upper bound of the confidence interval for the estimated treatment effect | Represents the best plausible impact of the treatment | Experimentation Dashboard |
+
+
 ## Assumptions
 
 - Conversion rates are calculated at the session level.
@@ -33,7 +45,7 @@ This document defines the business metrics implemented in the A/B Testing Analyt
 - Relative Lift is calculated relative to the Control Conversion Rate.
 - Traffic Allocation is based on total experiment sessions.
 
-## Authour
+## Author
 **Ajibola Komolafe** — Analytics Engineer | Data Analyst
 - [LinkedIn](https://www.linkedin.com/in/ajibola-komo/) 
 - [GitHub](https://github.com/ajibola-komo/)
