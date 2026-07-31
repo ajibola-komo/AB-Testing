@@ -9,28 +9,9 @@ from src.config.envariables import SNOWFLAKE_CONFIG
 import subprocess
 from src.statistical_analysis import run_statistical_analysis
 
-from src.config.paths import (DDL_AB_TEST, DDL_COUNTRIES, SNOWFLAKE_AB_TEST, SNOWFLAKE_COUNTRIES, RAW_AB_TEST, RAW_COUNTRIES, DB_DIR,
-                              DBT_DIR
-                              
-                              )
+from src.config.paths import (SNOWFLAKE_AB_TEST, SNOWFLAKE_COUNTRIES,DBT_DIR)
 
 load_dotenv()
-
-def load_csv_data(conn):
-        create_db1 = DDL_AB_TEST.read_text()
-        create_db2 = DDL_COUNTRIES.read_text()
-
-        conn.execute(create_db1)
-        conn.execute(create_db2)
-
-        conn.execute(f'''
-        insert into ab_test (id, event_time, con_treat, page, converted) SELECT id, event_time, con_treat, page, converted from read_csv_auto('{RAW_AB_TEST}')
-
-''')
-
-        conn.execute(f'''
-        INSERT INTO countries select * from read_csv_auto('{RAW_COUNTRIES}')
-    ''')
 
 def create_snowflake_tables():
 
@@ -69,7 +50,7 @@ def create_snowflake_tables():
     cursor.close()
     conn.close()
 
-def load_to_snowflake(conn):
+def load_to_snowflake():
 
     connect = snowflake.connector.connect(**SNOWFLAKE_CONFIG)
     cursor = connect.cursor()
@@ -79,8 +60,8 @@ def load_to_snowflake(conn):
 
     create_snowflake_tables()
 
-    ab_test = conn.execute('''SELECT id, event_time, con_treat, page, converted FROM ab_test''').df()
-    countries = conn.execute('''SELECT id, country FROM countries''').df()
+    ab_test = pd.read_csv('raw/ab_test.csv',delimiter=',')
+    countries = pd.read_csv('raw/countries_ab.csv',delimiter=',')
 
     cursor.execute(f"USE DATABASE {SNOWFLAKE_CONFIG.get('database')}")
     cursor.execute(f"USE SCHEMA {SNOWFLAKE_CONFIG.get('database')}.{SNOWFLAKE_CONFIG.get('schema')}")
@@ -107,14 +88,7 @@ def run_dbt():
     check=True
 )
 
-
-
 def main():
-    conn = db.connect(DB_DIR)
-    load_csv_data(conn)
-    load_to_snowflake(conn)
-    conn.close()
+    load_to_snowflake()
     run_statistical_analysis()
     run_dbt()
-
-main()
