@@ -17,7 +17,7 @@ with get_metrics as (
 
     count(case when test_group = 'control' then user_id end) as total_control_sessions
 
-    from {{ref('mart_ab_test')}}
+    from {{ref('silver_ab_test')}}
 )
 
 select 

@@ -90,5 +90,6 @@ def run_dbt():
 
 def main():
     load_to_snowflake()
+    run_dbt()
     run_statistical_analysis()
     run_dbt()

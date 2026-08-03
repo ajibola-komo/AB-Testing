@@ -1,1 +1,0 @@
-select * from {{ref('silver_ab_test')}}

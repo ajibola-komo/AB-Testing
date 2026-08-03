@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: silver_ab_test
+    description: This model is the intermediate layer of this project where the data is transformed, cleaned, and standardised.
+
+    config:
+      tags:
+        - silver
+
+    columns:
+      - name: user_id
+        description: The unique user identifier that participated in the experiment
+
+      - name: duration_seconds
+        description: Amount of time spent by the user on the site
+
+      - name: test_group
+        description: The experiment group or variant assigned to the user
+        tests:
+         - accepted_values:
+            values:
+             - control
+             - treatment
+
+      - name: test_page
+        description: The experiment page visited by the user
+        tests:
+         - accepted_values:
+            values:
+             - old_page
+             - new_page
+    
+      - name: is_converted
+        description: This column denotes if the user converted or not on this session
+        tests:
+         - accepted_values:
+            values:
+             - 0
+             - 1
+    
+  - name: silver_countries
+    description: This model is the intermediate layer of this project where the data is transformed, cleaned, and standardised.
+
+    config:
+      tags:
+        - silver
+
+    columns:
+      - name: user_id
+        description: The unique identifier of each registered user
+
+      - name: country
+        description: This column denotes the geographic location of each user
+        tests:
+         - accepted_values:
+            values:
+             - UK
+             - US
+             - CA
+

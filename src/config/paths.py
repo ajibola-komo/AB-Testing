@@ -2,7 +2,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-SQL_DIR = PROJECT_ROOT / "ddl"
+SQL_DIR = PROJECT_ROOT / "sql"
 
 DBT_DIR = PROJECT_ROOT / "ab_testing"
 
