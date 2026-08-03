@@ -6,5 +6,5 @@ count(case when is_converted = 1 then user_id end) as total_conversions,
 count(case when is_converted = 1 then user_id end)::FLOAT/nullif(count(user_id),0) as session_conversion_rate,
 avg(duration_seconds) as average_session_duration,
 median(duration_seconds) as median_session_duration
-from {{ref('mart_ab_test')}}
+from {{ref('silver_ab_test')}}
 group by test_group

@@ -9,5 +9,5 @@ count(distinct user_id) as total_visitors,
 count(*) as total_sessions,
 count(case when is_converted = 1 then user_id end) as total_conversions,
 count(case when is_converted = 1 then user_id end)::FLOAT / nullif(count(*),0) as session_conversion_rate
-from {{ref('mart_ab_test')}}
+from {{ref('silver_ab_test')}}
 group by 1
