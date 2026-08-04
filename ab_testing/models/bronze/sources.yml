@@ -8,7 +8,25 @@ sources:
 
     tables:
       - name: ab_test
-        description: "Raw A/B test data ingested from Duckdb."
+        description: Raw A/B test data ingested from the kaggle dataset.
+
+        columns:
+          - name: id
+            description: Unique identifier for each user participating in the A/B test.
+          - name: event_time
+            description: The user's session duration in seconds, representing the time spent on the website during the session.
+          - name: con_treat
+            description: The test group to which the user belongs (control or treatment).
+          - name: page
+            description: The specific page variation that the user was exposed to during the A/B test.
+          - name: converted
+            description: Indicates whether the user converted (1) or did not convert (0) during the session.
 
       - name: countries
-        description: "Raw country data ingested from Duckdb."
+        description: Raw country data ingested from the kaggle dataset.
+
+        columns:
+          - name: id
+            description: Unique identifier for each user participating in the A/B test.
+          - name: country
+            description: The country associated with the user, indicating their geographic location.
