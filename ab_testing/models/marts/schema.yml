@@ -1,0 +1,313 @@
+version: 2
+
+models:
+  - name: mart_ab_test
+    description: >
+        Business-ready fact table containing one record per experiment session. The model combines user session attributes, experiment assignment, page variation, and conversion outcome to support downstream business reporting and statistical analysis.
+    config:
+      tags:
+        - marts
+
+    columns:
+      - name: user_id
+        description: The unique user identifier that participated in the experiment
+
+      - name: duration_seconds
+        description: Amount of time spent by the user on the site
+
+      - name: test_group
+        description: The experiment group or variant assigned to the user
+        tests:
+         - accepted_values:
+            values:
+             - control
+             - treatment
+
+      - name: test_page
+        description: The experiment page visited by the user
+        tests:
+         - accepted_values:
+            values:
+             - old_page
+             - new_page
+    
+      - name: is_converted
+        description: This column denotes if the user converted or not on this session
+        tests:
+         - accepted_values:
+            values:
+             - 0
+             - 1
+    
+  - name: mart_countries
+    description: >
+        Dimension table containing the geographic location associated with each experiment participant. This model supports geographic segmentation and country-level performance reporting.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+      - name: user_id
+        description: The unique identifier of each registered user
+
+      - name: country
+        description: This column denotes the geographic location of each user
+        tests:
+         - accepted_values:
+            values:
+             - UK
+             - US
+             - CA
+
+  - name: mart_country_performance
+    description:  Business-ready analytics mart that summarizes A/B testing performance by country. This model enables stakeholders to analyse experiment participation, engagement, and conversion performance across geographic regions to identify variations in experiment outcomes.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: country
+        description: The distinct geographic location of all the users that participated in the experiment. This column is used to group the experiment performance metrics by country.
+        tests:
+         - accepted_values:
+            values:
+             - UK
+             - US
+             - CA
+
+      - name: total_visitors
+        description: The total number of unique users that participated in the experiment
+
+      - name: total_sessions
+        description: The total number of user sessions that participated in the experiment
+
+      - name: session_conversion_rate
+        description: The ratio of the total number of users that converted to the total number of sessions
+    
+      - name: average_session_duration
+        description: The average amount of time spent by the users on the site during the experiment
+
+  - name: mart_session_analysis
+    description: >
+        Aggregates user sessions into duration buckets to evaluate engagement and conversion performance. The model provides metrics including unique
+        visitors, total sessions, total conversions, and session conversion rate for each session duration category, enabling analysis of how session
+        length impacts user conversion.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: duration_bucket
+        description: >
+            Session duration category based on the session length in seconds (Less than 1 Min, 1–5 Min, 5–10 Min, 10+ Min).
+        tests:
+         - accepted_values:
+            values:
+             - Less than 1 Min
+             - 1 - 5 Min
+             - 5 - 10 Min
+             - 10+ Min
+
+      - name: total_visitors
+        description: Number of unique users with sessions in the duration bucket.
+
+      - name: total_sessions
+        description: Total number of sessions within the duration bucket.
+
+      - name: total_conversions
+        description: Number of sessions that resulted in a conversion.
+
+      - name: session_conversion_rate
+        description: Percentage of sessions in the duration bucket that resulted in a conversion (total_conversions / total_sessions).
+
+  - name: mart_experiment_summary
+
+    description: >
+        Summarises key session and conversion metrics for each A/B test group.
+        The model reports visitor counts, session volumes, conversion performance, and session duration statistics to support evaluation of
+        experiment effectiveness and user engagement across the control and treatment groups.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: test_group
+        description: >
+            The A/B testing cohort (e.g., Control or Treatment).
+        tests:
+         - accepted_values:
+            values:
+             - control
+             - treatment
+
+      - name: total_visitors
+        description: Number of unique users assigned to the test group.
+
+      - name: total_sessions
+        description: Total number of sessions generated by users in the test group.
+
+      - name: total_conversions
+        description: Number of sessions that resulted in a successful conversion.
+
+      - name: session_conversion_rate
+        description: Percentage of sessions in the test group that resulted in a conversion (total_conversions / total_sessions).
+
+      - name: average_session_duration
+        description: Mean session duration, in seconds, for sessions within the test group.
+
+      - name: median_session_duration
+        description: Median session duration, in seconds, representing the typical session length while reducing the impact of outliers.
+
+
+  - name: mart_data_quality
+    description: >
+        Evaluates the integrity of A/B test assignments by measuring the rate of
+        valid and invalid experiment allocations. The model identifies sessions
+        where users were exposed to the incorrect page variation for their
+        assigned test group, providing a key data quality check before
+        experiment analysis.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: invalid_assignment_rate
+        description: >
+            Percentage of records where the assigned test group does not match the page variation shown (e.g., Control → New Page or Treatment → Old Page).
+
+      - name: valid_assignment_rate
+        description: >
+            Percentage of records where the assigned test group matches the page variation shown (e.g., Control → Old Page or Treatment → New Page).
+
+
+  - name: mart_high_level_summary
+    description: >
+      Provides a high-level summary of A/B test performance and experiment
+      health. The model consolidates overall traffic, visitor and conversion
+      metrics with control and treatment conversion rates, absolute and
+      relative lift, traffic allocation, and session duration statistics to
+      provide a single view of experiment outcomes.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: total_sessions
+        description: >
+            Total number of sessions included in the experiment analysis.
+
+      - name: total_visitors
+        description: >
+            Number of unique users included in the experiment.
+
+      - name: total_conversions
+        description: >
+            Total number of sessions that resulted in a conversion.
+
+      - name: session_conversion_rate
+        description: >
+            Proportion of all experiment sessions that resulted in a conversion.
+
+      - name: control_conversion_rate
+        description: >
+            Proportion of control-group sessions that resulted in a conversion.
+
+      - name: treatment_conversion_rate
+        description: >
+            Proportion of treatment-group sessions that resulted in a conversion.
+
+      - name: absolute_lift
+        description: >
+            Difference in conversion rates between the treatment and control groups (treatment_conversion_rate - control_conversion_rate).
+
+      - name: relative_lift
+        description: >
+            Relative difference in conversion rates between the treatment and control groups ((treatment_conversion_rate - control_conversion_rate) / control_conversion_rate).
+
+      - name: control_traffic_allocation
+        description: >
+            Proportion of total experiment sessions assigned to the control group.
+
+      - name: treatment_traffic_allocation
+        description: >
+            Proportion of total experiment sessions assigned to the treatment group.
+
+      - name: average_session_duration
+        description: >
+            Mean session duration, in seconds, across all experiment sessions.
+
+      - name: median_session_duration
+        description: >
+            Median session duration, in seconds, across all experiment sessions.
+
+  - name: mart_statistical_summary
+    description: >
+      Summarises the statistical results of the A/B experiment by combining
+      conversion performance metrics with hypothesis testing outputs. The
+      model reports control and treatment conversion rates, absolute and
+      relative lift, z-statistic, p-value, confidence interval bounds, and
+      statistical significance to support experiment evaluation and
+      decision-making.
+
+    config:
+      tags:
+        - marts
+
+    columns:
+
+      - name: total_control_sessions
+        description: >
+            Total number of sessions assigned to the Control group.
+
+      - name: total_treatment_sessions
+        description: >
+            Total number of sessions assigned to the Treatment group.
+
+      - name: control_conversion_rate
+        description: >
+            Proportion of Control group sessions that resulted in a conversion.
+
+      - name: treatment_conversion_rate
+        description: >
+            Proportion of Treatment group sessions that resulted in a conversion.
+
+      - name: absolute_lift
+        description: >
+            Difference in conversion rate between the Treatment and Control groups, expressed in percentage points.
+
+      - name: relative_lift
+        description: >
+            Percentage change in the Treatment Conversion Rate relative to the Control Conversion Rate.
+
+      - name: z_statistic
+        description: >
+            Standardized measure of the difference between the Control and Treatment conversion rates used in the hypothesis test.
+    
+      - name: p_value
+        description: >
+            Probability of observing the data, or something more extreme, under the null hypothesis that there is no difference in conversion rates between the Control and Treatment groups.
+
+      - name: ci_lower
+        description: >
+            Lower bound of the confidence interval for the difference in conversion rates between the Treatment and Control groups.
+
+      - name: ci_upper
+        description: >
+            Upper bound of the confidence interval for the difference in conversion rates between the Treatment and Control groups.
+
+      - name: is_significant
+        description: >
+            Boolean indicator of whether the observed difference in conversion rates between the Treatment and Control groups is statistically significant at the chosen significance level (p_value < 0.05).
+
+

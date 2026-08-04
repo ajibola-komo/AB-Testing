@@ -39,12 +39,13 @@ total_treatment_conversions::FLOAT / total_treatment_sessions as treatment_conve
 
 -- Relative Lift
 (
-(total_treatment_conversions::FLOAT / total_treatment_sessions)
-- 
-(total_control_conversions::FLOAT / total_control_sessions) )
-/ 
-(total_treatment_conversions::FLOAT / total_treatment_sessions)
- as relative_lift,
+    (total_treatment_conversions::FLOAT / total_treatment_sessions)
+    -
+    (total_control_conversions::FLOAT / total_control_sessions)
+)
+/
+(total_control_conversions::FLOAT / total_control_sessions)
+AS relative_lift,
 
 -- Absolute Lift
 ((total_treatment_conversions::FLOAT / total_treatment_sessions)
