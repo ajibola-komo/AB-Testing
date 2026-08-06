@@ -35,4 +35,3 @@ exposures:
     depends_on:
       - ref('mart_high_level_summary')
       - ref('mart_data_quality')
-      - ref('mart_statistical_summary')

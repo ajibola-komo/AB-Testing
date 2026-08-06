@@ -4,7 +4,7 @@ sources:
   - name: bronze
     database: AB_TEST
     schema: BRONZE
-    description: "Raw ingested data from Duckdb"
+    description: "Raw ingested data from the kaggle dataset."
 
     tables:
       - name: ab_test
