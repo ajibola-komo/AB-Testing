@@ -10,14 +10,15 @@
 6. Solution Architecture
 7. Analytics Engineering Workflow
 8. Data Model
-9. Business Intelligence Layer
-10. Dashboard Review
-11. Statistical Methodology
-12. Key Findings
-13. Business Recommendation
-14. Repository Structure
-15. Key Skills Demonstrated
-16. Author
+9. dbt Documentation & Lineage
+10. Business Intelligence Layer
+11. Dashboard Review
+12. Statistical Methodology
+13. Key Findings
+14. Business Recommendation
+15. Repository Structure
+16. Key Skills Demonstrated
+17. Author
 
 ## 1. Problem Statement and Business Case
 Companies frequently experiment with new product features and user experiences to improve key business outcomes such as customer acquisition, engagement, and conversion. However, making product decisions without a structured experimentation framework can lead to subjective conclusions and costly releases.
@@ -115,6 +116,9 @@ providing end-to-end visibility into the analytics engineering workflow.
 The lineage below illustrates how raw experiment data is transformed through the
 Bronze, Silver, and Mart layers before powering the Executive and
 Experimentation Power BI dashboards via dbt exposures.
+
+The lineage includes dbt Exposures, documenting how the mart layer supports the
+Executive and Experimentation Power BI dashboards.
 
 ![dbt Lineage](documentation/01%20-%20dbt_lineage.png)
 
