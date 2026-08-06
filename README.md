@@ -77,7 +77,7 @@ These dashboards answer key business questions including:
 ## 8. Data Model
 
 This section of the document focuses **exclusively on the mart layer** of the data model. The project follows a medallion architecture namely
-bronze, silver and the mart layer. A comprehensive description of the data model can be found in the [data dictionary documentation](documentation/01_data_dictionary.pdf).
+bronze, silver and the mart layer. Detailed model and column documentation is available through the project's dbt documentation..
 
 | Table | Type | Grain | Approx. Rows | Purpose |
 |-------|------------|---------|---------| ---------|
@@ -91,14 +91,43 @@ bronze, silver and the mart layer. A comprehensive description of the data model
 | mart_statistical_summary | Mart | One statistical summary record | 1 | Statistical Summary |
 
 ---
-## 9. Business Intelligence Layer
+
+## 9. dbt Documentation & Lineage
+
+The project includes comprehensive dbt documentation generated using `dbt docs`,
+providing end-to-end visibility into the analytics engineering workflow.
+
+### Documentation Features
+
+- Model-level documentation
+- Column-level descriptions
+- Source-to-mart lineage
+- Data quality tests
+- Dashboard exposures
+- Model dependencies
+
+### Model Documentation
+
+![dbt Documentation](documentation/02%20-%20dbt_docs.png)
+
+### End-to-End Lineage
+
+The lineage below illustrates how raw experiment data is transformed through the
+Bronze, Silver, and Mart layers before powering the Executive and
+Experimentation Power BI dashboards via dbt exposures.
+
+![dbt Lineage](documentation/01%20-%20dbt_lineage.png)
+
+---
+
+## 10. Business Intelligence Layer
 
 This project uses Power BI as a visualisation layer however, Power BI is not connected to Snowflake to reduce unneccessary complexity.
 
 The 8 mart tables are exported from snowflake in CSV format and loaded to Power BI. Additionally, only the pre-aggregated mart tables are
 connected to at the BI Layer
 
-## 10. Dashboard Review
+## 11. Dashboard Review
 
 ### Executive Dashboard
 
@@ -128,7 +157,7 @@ For detailed metrics definition, see [metrics_definition.md](documentation/03%20
 
 ---
 
-## 11. Statistical Methodology
+## 12. Statistical Methodology
 
 The experiment evaluates whether the redesigned landing page results in a statistically significant difference in conversion rate compared with the existing landing page.
 
@@ -164,19 +193,19 @@ There is a difference in conversion rates between the control and treatment land
 
 Detailed metric definitions are available in the [Metrics Definition documentation](documentation/03%20-%20metrics_definition.md).
 
-## 12. Key Findings
+## 13. Key Findings
 
 - The analysis shows a 1.3% invalid test group assignment error which was omitted from the overall analysis.
 - The analysis shows a negligible difference between the control and treatment test groups conversion rates.
 - Based on the results of the analysis, the control test group performed better than the treatment test group with a relative lift of -1.2%.
 - Over 80% of the conversions had a session duration of over 10 minutes.
 
-## 13. Business Recommendation
+## 14. Business Recommendation
 
 - We recommend rejecting the new page design and retaining the old page while exploring other design options that could have a meaningful impact
 on conversion.
 
-## 14. Repository Structure
+## 15. Repository Structure
 
 ```text
 AB-Testing/
@@ -222,9 +251,10 @@ AB-Testing/
 │   └── dbt_project.yml
 │
 ├── documentation/
-│   ├── 01 - ab_testing_data_dictionary.pdf
-│   ├── 02 - business_questions.md
-│   └── 03 - metrics_definition.md
+│   ├── 01 - dbt_lineage.png
+│   ├── 02 - dbt_docs.png
+│   ├── 03 - business_questions.md
+│   └── 04 - metrics_definition.md
 │
 │
 │
@@ -243,7 +273,7 @@ AB-Testing/
 ```
 
 
-## 15. Key Skills Demonstrated
+## 16. Key Skills Demonstrated
 
 ### Analytics Engineering
 
@@ -267,7 +297,7 @@ AB-Testing/
 
 ---
 
-## 16. Author
+## 17. Author
 **Ajibola Komolafe** — Analytics Engineer | Data Analyst
 - [LinkedIn](https://www.linkedin.com/in/ajibola-komo/) 
 - [GitHub](https://github.com/ajibola-komo/)
