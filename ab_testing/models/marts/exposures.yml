@@ -1,0 +1,38 @@
+version: 2
+
+exposures:
+
+  - name: executive_dashboard
+    label: Executive Dashboard
+    type: dashboard
+    maturity: high
+
+    description: >
+      Executive dashboard providing a high-level summary of A/B test performance, including conversion rates,
+      performance by test group, conversions by country, conversions by duration bucket, and business KPIs.
+
+    owner:
+      name: Ajibola Komolafe
+      email: omotoyekomolafe@gmail.com
+
+    depends_on:
+      - ref('mart_high_level_summary')
+      - ref('mart_session_analysis')
+      - ref('mart_experiment_summary')
+      - ref('mart_country_performance')
+
+  - name: experimentation_dashboard
+    label: Experimentation Dashboard
+    type: dashboard
+    maturity: high
+
+    description: >
+     Dashboard supporting experiment analysis, experiment health, statistical validation, and engagement analysis.
+
+    owner:
+      name: Ajibola Komolafe
+
+    depends_on:
+      - ref('mart_high_level_summary')
+      - ref('mart_data_quality')
+      - ref('mart_statistical_summary')
